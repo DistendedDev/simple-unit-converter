@@ -8,9 +8,10 @@ import java.awt.*;
 
 public class Window extends JFrame {
 
-    private JButton convertButton = new JButton("Convert", ImageHelper.getImage("convert.png", 20, 20));
+    private JButton convertButton = new JButton("Convert",
+            ImageHelper.getImage("images/convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
-    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionHandler.UNITS_HASHMAP.keySet().toArray(new String[0]));
+    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionHandler.UNITS.keySet().toArray(new String[0]));
     private JComboBox unitSelectionBox1 = new JComboBox();
     private JComboBox unitSelectionBox2 = new JComboBox();
     private JLabel resultsLabel = new JLabel();
@@ -61,11 +62,11 @@ public class Window extends JFrame {
 
     private void reloadSelectionBoxes() {
         unitSelectionBox1.removeAllItems();
-        for (String s : UnitConversionHandler.UNITS_HASHMAP.get(unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionHandler.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
             unitSelectionBox1.addItem(s);
         }
         unitSelectionBox2.removeAllItems();
-        for (String s : UnitConversionHandler.UNITS_HASHMAP.get(unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionHandler.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
             unitSelectionBox2.addItem(s);
         }
     }
