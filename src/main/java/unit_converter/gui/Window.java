@@ -2,6 +2,7 @@ package main.java.unit_converter.gui;
 
 import main.java.unit_converter.util.ImageHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
+import main.java.unit_converter.util.UnitSelectionBox;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,9 +12,9 @@ public class Window extends JFrame {
     private JButton convertButton = new JButton("Convert",
             ImageHelper.getImage("convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
-    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionUtil.getUnitTypes());
-    private JComboBox unitSelectionBox1 = new JComboBox();
-    private JComboBox unitSelectionBox2 = new JComboBox();
+    private JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
+    private UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox();
+    private UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox();
     private JLabel resultsLabel = new JLabel();
     private JPanel numberEntryPanel = new JPanel();
     private JPanel unitSelectionPanel = new JPanel();
@@ -34,7 +35,7 @@ public class Window extends JFrame {
     private void initFrame(String name) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle(name);
-        this.setMinimumSize(new Dimension(400, 200));
+        this.setMinimumSize(new Dimension(640, 320));
         this.setLocationRelativeTo(null);
         this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
     }
@@ -58,9 +59,9 @@ public class Window extends JFrame {
             resultsLabel.setText("Result: "
                     + UnitConversionUtil.convert(n,
                         (String) unitTypeSelectionBox.getSelectedItem(),
-                        (String) unitSelectionBox1.getSelectedItem(),
-                        (String) unitSelectionBox2.getSelectedItem())
-                    + unitSelectionBox2.getSelectedItem());
+                        unitSelectionBox1.getSelectedUnit(),
+                        unitSelectionBox2.getSelectedUnit())
+                    + unitSelectionBox2.getSelectedUnit());
         });
         convertButton.setFocusable(false);
         convertButton.setEnabled(true);
@@ -72,16 +73,8 @@ public class Window extends JFrame {
     }
 
     private void reloadSelectionBoxes() {
-        unitSelectionBox1.removeAllItems();
-        for (String s : UnitConversionUtil.getUnits((String) unitTypeSelectionBox.getSelectedItem())) {
-            unitSelectionBox1.addItem(s);
-        }
-        unitSelectionBox1.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
-        unitSelectionBox2.removeAllItems();
-        for (String s : UnitConversionUtil.getUnits((String) unitTypeSelectionBox.getSelectedItem())) {
-            unitSelectionBox2.addItem(s);
-        }
-        unitSelectionBox2.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
+        unitSelectionBox1.reload(unitTypeSelectionBox);
+        unitSelectionBox2.reload(unitTypeSelectionBox);
     }
 
     private void initUnitSelectionBoxes() {
@@ -107,6 +100,7 @@ public class Window extends JFrame {
         this.add(numberEntryPanel);
         unitSelectionPanel.add(unitTypeSelectionBox);
         unitSelectionPanel.add(unitSelectionBox1);
+        unitSelectionPanel.add(new JLabel(ImageHelper.getImage("arrow.png", 50, 20)));
         unitSelectionPanel.add(unitSelectionBox2);
         unitSelectionPanel.setMaximumSize(new Dimension(380, 32));
         this.add(unitSelectionPanel);
