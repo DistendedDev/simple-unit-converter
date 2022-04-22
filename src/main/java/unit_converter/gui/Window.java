@@ -11,7 +11,7 @@ public class Window extends JFrame {
     private JButton convertButton = new JButton("Convert",
             ImageHelper.getImage("convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
-    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionUtil.UNITS.keySet().toArray(new String[0]));
+    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionUtil.getUnitTypes());
     private JComboBox unitSelectionBox1 = new JComboBox();
     private JComboBox unitSelectionBox2 = new JComboBox();
     private JLabel resultsLabel = new JLabel();
@@ -73,12 +73,12 @@ public class Window extends JFrame {
 
     private void reloadSelectionBoxes() {
         unitSelectionBox1.removeAllItems();
-        for (String s : UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionUtil.getUnits((String) unitTypeSelectionBox.getSelectedItem())) {
             unitSelectionBox1.addItem(s);
         }
         unitSelectionBox1.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
         unitSelectionBox2.removeAllItems();
-        for (String s : UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionUtil.getUnits((String) unitTypeSelectionBox.getSelectedItem())) {
             unitSelectionBox2.addItem(s);
         }
         unitSelectionBox2.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
