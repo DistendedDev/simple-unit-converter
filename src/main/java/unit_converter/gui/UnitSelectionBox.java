@@ -1,4 +1,4 @@
-package main.java.unit_converter.util;
+package main.java.unit_converter.gui;
 
 import main.java.unit_converter.conversion.UnitConversionUtil;
 

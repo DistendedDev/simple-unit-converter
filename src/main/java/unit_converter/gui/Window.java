@@ -2,7 +2,6 @@ package main.java.unit_converter.gui;
 
 import main.java.unit_converter.util.ImageHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
-import main.java.unit_converter.util.UnitSelectionBox;
 
 import javax.swing.*;
 import java.awt.*;
