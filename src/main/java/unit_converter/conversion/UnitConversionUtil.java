@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 
-public class UnitConversionHandler {
+public class UnitConversionUtil {
 
     public static HashMap<String, UnitType> UNITS = new LinkedHashMap<>() {{
         put("Length", new UnitType(new LinkedHashMap<>() {{

@@ -1,7 +1,7 @@
 package main.java.unit_converter.gui;
 
 import main.java.unit_converter.util.ImageHelper;
-import main.java.unit_converter.conversion.UnitConversionHandler;
+import main.java.unit_converter.conversion.UnitConversionUtil;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ public class Window extends JFrame {
     private JButton convertButton = new JButton("Convert",
             ImageHelper.getImage("convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
-    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionHandler.UNITS.keySet().toArray(new String[0]));
+    private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionUtil.UNITS.keySet().toArray(new String[0]));
     private JComboBox unitSelectionBox1 = new JComboBox();
     private JComboBox unitSelectionBox2 = new JComboBox();
     private JLabel resultsLabel = new JLabel();
@@ -48,8 +48,19 @@ public class Window extends JFrame {
         convertButton.setIconTextGap(5);
         convertButton.setFont(new Font("Cooper Black", Font.PLAIN, 16));
         convertButton.addActionListener(e -> {
-            double n = Double.parseDouble(numberEntryField.getText());
-            resultsLabel.setText("Result: " + UnitConversionHandler.convert(n, (String) unitTypeSelectionBox.getSelectedItem(), (String) unitSelectionBox1.getSelectedItem(), (String) unitSelectionBox2.getSelectedItem())+ unitSelectionBox2.getSelectedItem());
+            double n;
+            try {
+                n = Double.parseDouble(numberEntryField.getText());
+            } catch (Exception ignored) {
+                resultsLabel.setText("Error: input is not a number");
+                return;
+            }
+            resultsLabel.setText("Result: "
+                    + UnitConversionUtil.convert(n,
+                        (String) unitTypeSelectionBox.getSelectedItem(),
+                        (String) unitSelectionBox1.getSelectedItem(),
+                        (String) unitSelectionBox2.getSelectedItem())
+                    + unitSelectionBox2.getSelectedItem());
         });
         convertButton.setFocusable(false);
         convertButton.setEnabled(true);
@@ -62,13 +73,15 @@ public class Window extends JFrame {
 
     private void reloadSelectionBoxes() {
         unitSelectionBox1.removeAllItems();
-        for (String s : UnitConversionHandler.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
             unitSelectionBox1.addItem(s);
         }
+        unitSelectionBox1.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
         unitSelectionBox2.removeAllItems();
-        for (String s : UnitConversionHandler.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
+        for (String s : UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).units().keySet()) {
             unitSelectionBox2.addItem(s);
         }
+        unitSelectionBox2.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
     }
 
     private void initUnitSelectionBoxes() {
