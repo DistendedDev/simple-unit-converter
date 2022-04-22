@@ -12,8 +12,8 @@ public class Window extends JFrame {
             ImageHelper.getImage("convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
     private JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
-    private UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox();
-    private UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox();
+    private UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox(unitTypeSelectionBox);
+    private UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox(unitTypeSelectionBox);
     private JLabel resultsLabel = new JLabel();
     private JPanel numberEntryPanel = new JPanel();
     private JPanel unitSelectionPanel = new JPanel();
@@ -72,8 +72,8 @@ public class Window extends JFrame {
     }
 
     private void reloadSelectionBoxes() {
-        unitSelectionBox1.reload(unitTypeSelectionBox);
-        unitSelectionBox2.reload(unitTypeSelectionBox);
+        unitSelectionBox1.reload();
+        unitSelectionBox2.reload();
     }
 
     private void initUnitSelectionBoxes() {

@@ -6,8 +6,15 @@ import javax.swing.*;
 
 public class UnitSelectionBox extends JComboBox<String> {
 
-    public UnitSelectionBox() {
+    private JComboBox<String> unitTypeSelectionBox;
+
+    public UnitSelectionBox(JComboBox<String> unitTypeSelectionBox) {
         super();
+        this.unitTypeSelectionBox = unitTypeSelectionBox;
+    }
+
+    public void reload() {
+        reload(unitTypeSelectionBox);
     }
 
     public void reload(JComboBox<String> unitTypeSelectionBox) {
