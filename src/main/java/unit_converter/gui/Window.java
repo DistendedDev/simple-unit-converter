@@ -9,7 +9,7 @@ import java.awt.*;
 public class Window extends JFrame {
 
     private JButton convertButton = new JButton("Convert",
-            ImageHelper.getImage("images/convert.png", 20, 20));
+            ImageHelper.getImage("convert.png", 20, 20));
     private JTextField numberEntryField = new JTextField();
     private JComboBox unitTypeSelectionBox = new JComboBox(UnitConversionHandler.UNITS.keySet().toArray(new String[0]));
     private JComboBox unitSelectionBox1 = new JComboBox();

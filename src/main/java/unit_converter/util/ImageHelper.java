@@ -12,7 +12,7 @@ public class ImageHelper {
         ImageIcon icon;
         try {
             icon = new ImageIcon(ImageIO
-                    .read(new File(Application.RESOURCES_DIRECTORY + fileDirectory))
+                    .read(new File(Application.RESOURCES_DIRECTORY + "images/" + fileDirectory))
                     .getScaledInstance(width, height, Image.SCALE_SMOOTH));
         } catch(Exception e) {
             System.out.printf("image %s not found", fileDirectory);
