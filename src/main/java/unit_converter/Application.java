@@ -10,7 +10,7 @@ public class Application {
     public static final Settings SETTINGS = new Settings(FileHelper.getSettings("config"));
     public static final Settings LANGUAGE = new Settings(FileHelper.getSettings("lang/" + SETTINGS.getSetting("lang")));
 
-    public static AppGUI applicationWindow = new AppGUI(640, 320);
+    public static AppGUI applicationWindow = new AppGUI(600, 250);
 
     public static void main(String[] args) {
         applicationWindow.show();
