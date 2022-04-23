@@ -1,18 +1,16 @@
 package main.java.unit_converter.gui;
 
+import main.java.unit_converter.Application;
 import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.HashMap;
 
 public class AppGUI {
 
-    private final HashMap<String, String> LANGUAGE;
-
     private final JFrame window = new JFrame();
-    private final JButton convertButton = new JButton("Convert",
+    private final JButton convertButton = new JButton(Application.LANGUAGE.getSetting("convert", true),
             FileHelper.getImage("convert.png", 20, 20));
     private final JTextField numberEntryField = new JTextField();
     private final JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
@@ -24,8 +22,7 @@ public class AppGUI {
     private final JPanel resultsPanel = new JPanel();
     private final JMenuBar menuBar = new JMenuBar();
 
-    public AppGUI(HashMap<String, String> langSettings) {
-        this.LANGUAGE = langSettings;
+    public AppGUI() {
         initFrame();
         initMenuBar();
         initNumberField();
@@ -42,7 +39,7 @@ public class AppGUI {
     //setting up main window
     private void initFrame() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setTitle(LANGUAGE.get("application_name"));
+        window.setTitle(Application.LANGUAGE.getSetting("application_name", true));
         window.setMinimumSize(new Dimension(640, 320));
         window.setLocationRelativeTo(null);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));

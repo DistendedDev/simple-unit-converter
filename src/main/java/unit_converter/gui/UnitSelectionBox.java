@@ -1,5 +1,6 @@
 package main.java.unit_converter.gui;
 
+import main.java.unit_converter.Application;
 import main.java.unit_converter.conversion.UnitConversionUtil;
 
 import javax.swing.*;
@@ -20,9 +21,11 @@ public class UnitSelectionBox extends JComboBox<String> {
     public void reload(JComboBox<String> unitTypeSelectionBox) {
         this.removeAllItems();
         for (String s : UnitConversionUtil.getUnits((String) unitTypeSelectionBox.getSelectedItem())) {
-            this.addItem(s);
+            this.addItem(Application.LANGUAGE.getSetting(s, true));
+            if (s.equals(UnitConversionUtil.getCommonUnit((String) unitTypeSelectionBox.getSelectedItem()))) {
+                this.setSelectedItem(Application.LANGUAGE.getSetting(s, true));
+            }
         }
-        this.setSelectedItem(UnitConversionUtil.UNITS.get((String) unitTypeSelectionBox.getSelectedItem()).commonUnit());
     }
 
     public String getSelectedUnit() {

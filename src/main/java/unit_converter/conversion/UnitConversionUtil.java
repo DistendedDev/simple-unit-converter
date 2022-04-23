@@ -7,7 +7,7 @@ import java.util.LinkedHashMap;
 public class UnitConversionUtil {
 
     //stores all units
-    public static HashMap<String, UnitType> UNITS = new LinkedHashMap<>() {{
+    private static final HashMap<String, UnitType> UNITS = new LinkedHashMap<>() {{
         put("Length", new UnitType(new LinkedHashMap<>() {{
             put("mm", 0.001);
             put("cm", 0.01);
@@ -35,6 +35,10 @@ public class UnitConversionUtil {
 
     public static String[] getUnits(String unitType) {
         return UNITS.get(unitType).units().keySet().toArray(new String[UNITS.get(unitType).units().size()]);
+    }
+
+    public static String getCommonUnit(String unitType) {
+        return UNITS.get(unitType).commonUnit();
     }
 
 }

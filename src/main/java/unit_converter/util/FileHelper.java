@@ -13,6 +13,8 @@ import java.util.Scanner;
 public class FileHelper {
 
     public static final String RESOURCES_DIRECTORY = "src/main/resources/";
+    public static final String IMAGES_DIRECTORY = RESOURCES_DIRECTORY + "images/";
+    public static final String SETTINGS_DIRECTORY = RESOURCES_DIRECTORY + "settings/";
 
     private static Scanner fileReader;
 
@@ -20,7 +22,7 @@ public class FileHelper {
         ImageIcon icon;
         try {
             icon = new ImageIcon(ImageIO
-                    .read(new File(RESOURCES_DIRECTORY + "images/" + fileDirectory))
+                    .read(new File(IMAGES_DIRECTORY + fileDirectory))
                     .getScaledInstance(width, height, Image.SCALE_SMOOTH));
         } catch(Exception e) {
             System.out.printf("image %s not found", fileDirectory);
@@ -32,7 +34,7 @@ public class FileHelper {
     public static HashMap<String, String> getSettings(String fileDirectory) {
         HashMap<String, String> settings = new LinkedHashMap<>();
         try {
-            fileReader = new Scanner(new File(RESOURCES_DIRECTORY + "settings/" + fileDirectory));
+            fileReader = new Scanner(new File(SETTINGS_DIRECTORY + fileDirectory));
         } catch (Exception e) {
             System.out.println("Error: " + fileDirectory + " file not found. ");
         }

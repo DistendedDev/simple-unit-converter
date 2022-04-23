@@ -1,2 +1,13 @@
 application_name:Unit Converter
 convert:Convert
+
+# Units
+km:kilometer
+m:meter
+cm:centimeter
+mm:millimeter
+
+ms: millisecond
+sec: second
+min: minute
+hr: hour
