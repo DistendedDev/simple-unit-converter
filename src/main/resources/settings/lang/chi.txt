@@ -1,0 +1,13 @@
+application_name:單位轉換器
+convert:轉換
+
+# Units
+km:公里
+m:米
+cm:厘米
+mm:微米
+
+ms: 微秒
+sec: 秒
+min: 分鐘
+hr: 小時
