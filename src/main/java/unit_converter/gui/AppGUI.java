@@ -17,13 +17,13 @@ public class AppGUI {
     private final TranslatedComboBox unitSelectionBox1 = new TranslatedComboBox();
     private final TranslatedComboBox unitSelectionBox2 = new TranslatedComboBox();
     private final JLabel resultsLabel = new JLabel();
-    private final JPanel numberEntryPanel = new JPanel();
-    private final JPanel unitSelectionPanel = new JPanel();
+    private final JPanel numberEntryPanel = new JPanel(new FlowLayout());
+    private final JPanel unitSelectionPanel = new JPanel(new FlowLayout());
     private final JPanel resultsPanel = new JPanel();
     private final JMenuBar menuBar = new JMenuBar();
 
-    public AppGUI() {
-        initFrame();
+    public AppGUI(int width, int height) {
+        initFrame(width, height);
         initMenuBar();
         initNumberField();
         initConvertButton();
@@ -37,17 +37,16 @@ public class AppGUI {
     }
 
     //setting up main window
-    private void initFrame() {
+    private void initFrame(int width, int height) {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setTitle(Application.LANGUAGE.getSetting("application_name", true) + " " + Application.VERSION);
-        window.setMinimumSize(new Dimension(640, 320));
+        window.setMinimumSize(new Dimension(width, height));
         window.setLocationRelativeTo(null);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
     }
 
     //setting up the convert button
     private void initConvertButton() {
-        convertButton.setSize(50, 25);
         convertButton.setHorizontalTextPosition(JButton.LEFT);
         convertButton.setVerticalTextPosition(JButton.CENTER);
         convertButton.setBorder(BorderFactory.createEtchedBorder());
@@ -75,7 +74,7 @@ public class AppGUI {
 
     //setting up text field
     private void initNumberField() {
-        numberEntryField.setPreferredSize(new Dimension(250, 25));
+        numberEntryField.setPreferredSize(new Dimension(window.getWidth() / 2, 25));
     }
 
     private void reloadSelectionBoxes() {
@@ -104,13 +103,13 @@ public class AppGUI {
     private void addElements() {
         numberEntryPanel.add(numberEntryField);
         numberEntryPanel.add(convertButton);
-        numberEntryPanel.setMaximumSize(new Dimension(380, 32));
+        numberEntryPanel.setMaximumSize(new Dimension(window.getWidth(), 32));
         window.add(numberEntryPanel);
         unitSelectionPanel.add(unitTypeSelectionBox);
         unitSelectionPanel.add(unitSelectionBox1);
         unitSelectionPanel.add(new JLabel(FileHelper.getImage("arrow.png", 50, 20)));
         unitSelectionPanel.add(unitSelectionBox2);
-        unitSelectionPanel.setMaximumSize(new Dimension(380, 32));
+        unitSelectionPanel.setMaximumSize(new Dimension(window.getWidth(), 32));
         window.add(unitSelectionPanel);
         resultsLabel.setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
         resultsPanel.add(resultsLabel);

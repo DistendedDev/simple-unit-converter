@@ -23,7 +23,6 @@ public class UnitConversionUtil {
     }};
 
     public static double convert(double value, String unitType, String currentUnit, String toConvert) {
-        String commonUnit = UNITS.get(unitType).commonUnit();
         value *= UNITS.get(unitType).units().get(currentUnit);
         value /= UNITS.get(unitType).units().get(toConvert);
         return value;
