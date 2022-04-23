@@ -1,8 +1,8 @@
 package main.java.unit_converter.gui;
 
 import main.java.unit_converter.Application;
-import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
+import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.util.WebHelper;
 
 import javax.swing.*;
@@ -10,8 +10,51 @@ import java.awt.*;
 
 public class AppGUI {
 
-    private final JButton convertButton =
-            new JButton(Application.LANGUAGE.getSetting("convert", true),
+    public AppGUI(int width, int height) {
+        window.setMinimumSize(new Dimension(width, height));
+        window.setLocationRelativeTo(null);
+        numberEntryField.setPreferredSize(new Dimension(window.getWidth() / 2, 25));
+        numberEntryPanel.setMaximumSize(new Dimension(window.getWidth(), 32));
+        unitSelectionPanel.setMaximumSize(new Dimension(window.getWidth(), 48));
+        resultsPanel.setMaximumSize(new Dimension(window.getWidth(), 64));
+        footerPanel.setMaximumSize(new Dimension(window.getWidth(), 48));
+    }
+
+    public void show() {
+        window.setVisible(true);
+    }
+
+    private void reloadSelectionBoxes() {
+        unitSelectionBox1.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
+                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
+        unitSelectionBox2.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
+                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
+    }
+
+    private double result;
+
+    private final JMenuBar menuBar = new JMenuBar() {{
+        add(new JMenu("Settings") {{
+            add(new JMenuItem("open settings folder") {{
+                addActionListener(e -> FileHelper.openResourceDirectory("settings"));
+            }});
+        }});
+        add(new JMenu("Help") {{
+            add(new JMenuItem("report issue") {{
+                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter/issues"));
+            }});
+            add(new JMenuItem("github page") {{
+                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter"));
+            }});
+        }});
+        add(new JMenu("Quit") {{
+            add(new JMenuItem("Exit") {{
+                addActionListener(e -> System.exit(0));
+            }});
+        }});
+    }};
+
+    private final JButton convertButton = new JButton(Application.LANGUAGE.getSetting("convert", true),
                     FileHelper.getImage("convert.png", 20, 20)) {{
         setHorizontalTextPosition(JButton.LEFT);
         setVerticalTextPosition(JButton.CENTER);
@@ -19,20 +62,18 @@ public class AppGUI {
         setIconTextGap(5);
         setFont(new Font(Application.LANGUAGE.getSetting("FONT2"), Font.PLAIN, 16));
         addActionListener(e -> {
-            double n;
             try {
-                n = Double.parseDouble(numberEntryField.getText());
+                result = Double.parseDouble(numberEntryField.getText());
             } catch (Exception ignored) {
                 resultsLabel.setText("Error: input is not a number");
                 return;
             }
-            resultsLabel.setText(Application.LANGUAGE.getSetting("result", true)
-                    + ": "
-                    + UnitConversionUtil.convert(n,
+            resultsLabel.setText(
+                    UnitConversionUtil.convert(result,
                     unitTypeSelectionBox.getSelectedRaw(),
                     unitSelectionBox1.getSelectedRaw(),
                     unitSelectionBox2.getSelectedRaw())
-                    + unitSelectionBox2.getSelectedItem());
+                    + unitSelectionBox2.getSelectedString());
         });
         setFocusable(false);
         setEnabled(true);
@@ -59,11 +100,16 @@ public class AppGUI {
         add(convertButton);
     }};
 
-    private final JPanel unitSelectionPanel = new JPanel(new FlowLayout()) {{
-        add(unitTypeSelectionBox);
+    private final JPanel conversionUnitSelectionPanel  = new JPanel(new FlowLayout()) {{
         add(unitSelectionBox1);
         add(new JLabel(FileHelper.getImage("arrow.png", 50, 20)));
         add(unitSelectionBox2);
+        setBorder(BorderFactory.createEtchedBorder());
+    }};
+
+    private final JPanel unitSelectionPanel = new JPanel(new FlowLayout()) {{
+        add(unitTypeSelectionBox);
+        add(conversionUnitSelectionPanel);
     }};
 
 
@@ -71,28 +117,18 @@ public class AppGUI {
         setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
     }};
 
-    private final JPanel resultsPanel = new JPanel() {{
+    private final JPanel resultsPanel = new JPanel(new GridLayout(2, 1)) {{
+        add(new JLabel(Application.LANGUAGE.getSetting("result", true) + ":") {{
+            setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
+        }});
         add(resultsLabel);
+        setBorder(BorderFactory.createEtchedBorder());
     }};
 
-    private final JMenuBar menuBar = new JMenuBar() {{
-        add(new JMenu("Settings") {{
-            add(new JMenuItem("open settings folder") {{
-                addActionListener(e -> FileHelper.openResourceDirectory("settings"));
-            }});
-        }});
-        add(new JMenu("Help") {{
-            add(new JMenuItem("report issue") {{
-                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter/issues"));
-            }});
-            add(new JMenuItem("github page") {{
-                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter"));
-            }});
-        }});
-        add(new JMenu("Quit") {{
-            add(new JMenuItem("Exit") {{
-                addActionListener(e -> System.exit(0));
-            }});
+    private final JPanel footerPanel = new JPanel() {{
+        add(new JButton("use result") {{
+            addActionListener(e -> numberEntryField.setText(result + ""));
+            setFocusable(false);
         }});
     }};
 
@@ -104,26 +140,8 @@ public class AppGUI {
         add(numberEntryPanel);
         add(unitSelectionPanel);
         add(resultsPanel);
+        add(footerPanel);
         setJMenuBar(menuBar);
     }};
-
-    public AppGUI(int width, int height) {
-        window.setMinimumSize(new Dimension(width, height));
-        window.setLocationRelativeTo(null);
-        numberEntryField.setPreferredSize(new Dimension(window.getWidth() / 2, 25));
-        numberEntryPanel.setMaximumSize(new Dimension(window.getWidth(), 32));
-        unitSelectionPanel.setMaximumSize(new Dimension(window.getWidth(), 32));
-    }
-
-    public void show() {
-        window.setVisible(true);
-    }
-
-    private void reloadSelectionBoxes() {
-        unitSelectionBox1.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
-                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
-        unitSelectionBox2.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
-                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
-    }
 
 }

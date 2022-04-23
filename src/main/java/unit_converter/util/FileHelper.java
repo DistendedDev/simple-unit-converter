@@ -1,7 +1,5 @@
 package main.java.unit_converter.util;
 
-import main.java.unit_converter.Application;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

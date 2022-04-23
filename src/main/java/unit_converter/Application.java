@@ -6,7 +6,7 @@ import main.java.unit_converter.util.settings.Settings;
 
 public class Application {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
     public static final Settings SETTINGS = new Settings(FileHelper.getSettings("config"));
     public static final Settings LANGUAGE = new Settings(FileHelper.getSettings("lang/" + SETTINGS.getSetting("lang")));
 

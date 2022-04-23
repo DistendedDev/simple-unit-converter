@@ -1,7 +1,6 @@
 package main.java.unit_converter.gui;
 
 import main.java.unit_converter.Application;
-import main.java.unit_converter.conversion.UnitConversionUtil;
 
 import javax.swing.*;
 
@@ -38,6 +37,10 @@ public class TranslatedComboBox extends JComboBox<String> {
 
     public String getSelectedRaw() {
         return rawOptions[this.getSelectedIndex()];
+    }
+
+    public String getSelectedString() {
+        return (String) getSelectedItem();
     }
 
 }
