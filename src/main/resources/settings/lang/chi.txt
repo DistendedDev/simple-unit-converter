@@ -17,7 +17,7 @@ m:米
 cm:厘米
 mm:微米
 
-ms: 微秒
-sec: 秒
-min: 分鐘
-hr: 小時
+ms:微秒
+sec:秒
+min:分鐘
+hr:小時

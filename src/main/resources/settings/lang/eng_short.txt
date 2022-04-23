@@ -12,12 +12,12 @@ Length:Length
 Time:Time
 
 # Units
-km:kilometer
-m:meter
-cm:centimeter
-mm:millimeter
+km:km
+m:m
+cm:cm
+mm:mm
 
-ms:millisecond
-sec:second
-min:minute
-hr:hour
+ms:ms
+sec:sec
+min:min
+hr:hr
