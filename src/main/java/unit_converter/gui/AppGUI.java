@@ -13,9 +13,9 @@ public class AppGUI {
     private final JButton convertButton = new JButton(Application.LANGUAGE.getSetting("convert", true),
             FileHelper.getImage("convert.png", 20, 20));
     private final JTextField numberEntryField = new JTextField();
-    private final JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
-    private final UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox(unitTypeSelectionBox);
-    private final UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox(unitTypeSelectionBox);
+    private final TranslatedComboBox unitTypeSelectionBox = new TranslatedComboBox(UnitConversionUtil.getUnitTypes());
+    private final TranslatedComboBox unitSelectionBox1 = new TranslatedComboBox();
+    private final TranslatedComboBox unitSelectionBox2 = new TranslatedComboBox();
     private final JLabel resultsLabel = new JLabel();
     private final JPanel numberEntryPanel = new JPanel();
     private final JPanel unitSelectionPanel = new JPanel();
@@ -63,10 +63,10 @@ public class AppGUI {
             }
             resultsLabel.setText("Result: "
                     + UnitConversionUtil.convert(n,
-                        (String) unitTypeSelectionBox.getSelectedItem(),
-                        unitSelectionBox1.getSelectedUnit(),
-                        unitSelectionBox2.getSelectedUnit())
-                    + unitSelectionBox2.getSelectedUnit());
+                        unitTypeSelectionBox.getSelectedRaw(),
+                        unitSelectionBox1.getSelectedRaw(),
+                        unitSelectionBox2.getSelectedRaw())
+                    + unitSelectionBox2.getSelectedRaw());
         });
         convertButton.setFocusable(false);
         convertButton.setEnabled(true);
@@ -78,8 +78,10 @@ public class AppGUI {
     }
 
     private void reloadSelectionBoxes() {
-        unitSelectionBox1.reload();
-        unitSelectionBox2.reload();
+        unitSelectionBox1.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
+                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
+        unitSelectionBox2.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
+                UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
     }
 
     private void initUnitSelectionBoxes() {

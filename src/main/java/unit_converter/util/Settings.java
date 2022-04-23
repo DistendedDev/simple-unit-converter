@@ -10,18 +10,6 @@ public class Settings {
         this.settings = settings;
     }
 
-    public String[] getSettingsArray(String[] keys) {
-        return getSettingsArray(keys, false);
-    }
-
-    public String[] getSettingsArray(String[] keys, boolean returnKey) {
-        String[] s = new String[keys.length];
-        for (int i = 0; i < keys.length; i++) {
-            s[i] = getSetting(keys[i], returnKey);
-        }
-        return s;
-    }
-
     public String getSetting(String key) {
         return getSetting(key, false);
     }
