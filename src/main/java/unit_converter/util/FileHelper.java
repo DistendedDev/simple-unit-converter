@@ -32,6 +32,9 @@ public class FileHelper {
     }
 
     public static HashMap<String, String> getSettings(String fileDirectory) {
+        if (fileDirectory.split("\\.").length < 2) {
+            fileDirectory += ".txt";
+        }
         HashMap<String, String> settings = new LinkedHashMap<>();
         try {
             fileReader = new Scanner(new File(SETTINGS_DIRECTORY + fileDirectory));

@@ -52,7 +52,7 @@ public class AppGUI {
         convertButton.setVerticalTextPosition(JButton.CENTER);
         convertButton.setBorder(BorderFactory.createEtchedBorder());
         convertButton.setIconTextGap(5);
-        convertButton.setFont(new Font("Cooper Black", Font.PLAIN, 16));
+        convertButton.setFont(new Font(Application.LANGUAGE.getSetting("FONT2"), Font.PLAIN, 16));
         convertButton.addActionListener(e -> {
             double n;
             try {
@@ -61,12 +61,13 @@ public class AppGUI {
                 resultsLabel.setText("Error: input is not a number");
                 return;
             }
-            resultsLabel.setText("Result: "
+            resultsLabel.setText(Application.LANGUAGE.getSetting("result", true)
+                    + ": "
                     + UnitConversionUtil.convert(n,
                         unitTypeSelectionBox.getSelectedRaw(),
                         unitSelectionBox1.getSelectedRaw(),
                         unitSelectionBox2.getSelectedRaw())
-                    + unitSelectionBox2.getSelectedRaw());
+                    + unitSelectionBox2.getSelectedItem());
         });
         convertButton.setFocusable(false);
         convertButton.setEnabled(true);
@@ -111,7 +112,7 @@ public class AppGUI {
         unitSelectionPanel.add(unitSelectionBox2);
         unitSelectionPanel.setMaximumSize(new Dimension(380, 32));
         window.add(unitSelectionPanel);
-        resultsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
+        resultsLabel.setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
         resultsPanel.add(resultsLabel);
         window.add(resultsPanel);
     }

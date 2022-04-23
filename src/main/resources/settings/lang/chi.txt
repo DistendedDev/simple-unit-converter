@@ -1,5 +1,15 @@
+# Fonts
+FONT1:SansSerif
+FONT2:SansSerif
+
+# --- #
 application_name:單位轉換器
 convert:轉換
+result:結果
+
+# Unit Types
+Length:長度
+Time:時間
 
 # Units
 km:公里

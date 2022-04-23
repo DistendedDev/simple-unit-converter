@@ -1,4 +1,4 @@
-package main.java.unit_converter.util;
+package main.java.unit_converter.util.settings;
 
 import java.util.HashMap;
 
@@ -8,6 +8,18 @@ public class Settings {
 
     public Settings(HashMap<String, String> settings) {
         this.settings = settings;
+    }
+
+    public String[] getSettings(String[] keys) {
+        return getSettings(keys, false);
+    }
+
+    public String[] getSettings(String[] keys, boolean returnKey) {
+        String[] s = new String[keys.length];
+        for (int i = 0; i < keys.length; i++) {
+            s[i] = getSetting(keys[i]);
+        }
+        return s;
     }
 
     public String getSetting(String key) {

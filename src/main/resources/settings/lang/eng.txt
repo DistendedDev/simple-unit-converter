@@ -1,5 +1,15 @@
+# Fonts
+FONT1:SansSerif
+FONT2:Cooper Black
+
+# --- #
 application_name:Unit Converter
 convert:Convert
+result:Result
+
+# Unit Types
+Length:Length
+Time:Time
 
 # Units
 km:kilometer
