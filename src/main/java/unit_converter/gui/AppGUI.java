@@ -3,9 +3,13 @@ package main.java.unit_converter.gui;
 import main.java.unit_converter.Application;
 import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
+import main.java.unit_converter.util.WebHelper;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class AppGUI {
 
@@ -91,9 +95,24 @@ public class AppGUI {
     }
 
     private void initMenuBar() {
-        JMenu settingsMenu = new JMenu("Settings");
-        JMenu helpMenu = new JMenu("Help");
-        JMenu quitMenu = new JMenu("Quit");
+        JMenu settingsMenu = new JMenu("Settings") {{
+            add(new JMenuItem("open settings folder") {{
+                addActionListener(e -> FileHelper.openResourceDirectory("settings"));
+            }});
+        }};
+        JMenu helpMenu = new JMenu("Help") {{
+            add(new JMenuItem("report issue") {{
+                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter/issues"));
+            }});
+            add(new JMenuItem("github page") {{
+                addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter"));
+            }});
+        }};
+        JMenu quitMenu = new JMenu("Quit") {{
+            add(new JMenuItem("Exit") {{
+                addActionListener(e -> System.exit(0));
+            }});
+        }};
         menuBar.add(settingsMenu);
         menuBar.add(helpMenu);
         menuBar.add(quitMenu);

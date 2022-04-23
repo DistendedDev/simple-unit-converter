@@ -56,4 +56,12 @@ public class FileHelper {
         return settings;
     }
 
+    public static void openResourceDirectory(String directory) {
+        File file = new File (RESOURCES_DIRECTORY + directory);
+        Desktop desktop = Desktop.getDesktop();
+        try {
+            desktop.open(file);
+        } catch (Exception ignored) {}
+    }
+
 }
