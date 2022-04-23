@@ -39,7 +39,7 @@ public class AppGUI {
     //setting up main window
     private void initFrame() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setTitle(Application.LANGUAGE.getSetting("application_name", true));
+        window.setTitle(Application.LANGUAGE.getSetting("application_name", true) + " " + Application.VERSION);
         window.setMinimumSize(new Dimension(640, 320));
         window.setLocationRelativeTo(null);
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
