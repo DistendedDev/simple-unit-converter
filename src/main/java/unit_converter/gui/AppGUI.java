@@ -1,27 +1,32 @@
 package main.java.unit_converter.gui;
 
-import main.java.unit_converter.util.ImageHelper;
+import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.conversion.UnitConversionUtil;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.HashMap;
 
-public class Window extends JFrame {
+public class AppGUI {
 
-    private JButton convertButton = new JButton("Convert",
-            ImageHelper.getImage("convert.png", 20, 20));
-    private JTextField numberEntryField = new JTextField();
-    private JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
-    private UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox(unitTypeSelectionBox);
-    private UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox(unitTypeSelectionBox);
-    private JLabel resultsLabel = new JLabel();
-    private JPanel numberEntryPanel = new JPanel();
-    private JPanel unitSelectionPanel = new JPanel();
-    private JPanel resultsPanel = new JPanel();
-    private JMenuBar menuBar = new JMenuBar();
+    private final HashMap<String, String> LANGUAGE;
 
-    public Window(String name) {
-        initFrame(name);
+    private final JFrame window = new JFrame();
+    private final JButton convertButton = new JButton("Convert",
+            FileHelper.getImage("convert.png", 20, 20));
+    private final JTextField numberEntryField = new JTextField();
+    private final JComboBox<String> unitTypeSelectionBox = new JComboBox<>(UnitConversionUtil.getUnitTypes());
+    private final UnitSelectionBox unitSelectionBox1 = new UnitSelectionBox(unitTypeSelectionBox);
+    private final UnitSelectionBox unitSelectionBox2 = new UnitSelectionBox(unitTypeSelectionBox);
+    private final JLabel resultsLabel = new JLabel();
+    private final JPanel numberEntryPanel = new JPanel();
+    private final JPanel unitSelectionPanel = new JPanel();
+    private final JPanel resultsPanel = new JPanel();
+    private final JMenuBar menuBar = new JMenuBar();
+
+    public AppGUI(HashMap<String, String> langSettings) {
+        this.LANGUAGE = langSettings;
+        initFrame();
         initMenuBar();
         initNumberField();
         initConvertButton();
@@ -30,13 +35,17 @@ public class Window extends JFrame {
         addElements();
     }
 
+    public void show() {
+        window.setVisible(true);
+    }
+
     //setting up main window
-    private void initFrame(String name) {
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setTitle(name);
-        this.setMinimumSize(new Dimension(640, 320));
-        this.setLocationRelativeTo(null);
-        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+    private void initFrame() {
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setTitle(LANGUAGE.get("application_name"));
+        window.setMinimumSize(new Dimension(640, 320));
+        window.setLocationRelativeTo(null);
+        window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
     }
 
     //setting up the convert button
@@ -89,23 +98,23 @@ public class Window extends JFrame {
         menuBar.add(settingsMenu);
         menuBar.add(helpMenu);
         menuBar.add(quitMenu);
-        this.setJMenuBar(menuBar);
+        window.setJMenuBar(menuBar);
     }
 
     private void addElements() {
         numberEntryPanel.add(numberEntryField);
         numberEntryPanel.add(convertButton);
         numberEntryPanel.setMaximumSize(new Dimension(380, 32));
-        this.add(numberEntryPanel);
+        window.add(numberEntryPanel);
         unitSelectionPanel.add(unitTypeSelectionBox);
         unitSelectionPanel.add(unitSelectionBox1);
-        unitSelectionPanel.add(new JLabel(ImageHelper.getImage("arrow.png", 50, 20)));
+        unitSelectionPanel.add(new JLabel(FileHelper.getImage("arrow.png", 50, 20)));
         unitSelectionPanel.add(unitSelectionBox2);
         unitSelectionPanel.setMaximumSize(new Dimension(380, 32));
-        this.add(unitSelectionPanel);
+        window.add(unitSelectionPanel);
         resultsLabel.setFont(new Font("SansSerif", Font.BOLD, 16));
         resultsPanel.add(resultsLabel);
-        this.add(resultsPanel);
+        window.add(resultsPanel);
     }
 
 }

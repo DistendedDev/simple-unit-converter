@@ -1,18 +1,20 @@
 package main.java.unit_converter;
 
-import main.java.unit_converter.gui.Window;
+import main.java.unit_converter.gui.AppGUI;
+import main.java.unit_converter.util.FileHelper;
 
 import javax.swing.*;
+import java.util.HashMap;
 
 public class Application {
 
-    public static final String APPLICATION_NAME = "Unit Converter";         //the name of the application
-    public static final String RESOURCES_DIRECTORY = "src/main/resources/"; //the directory of the resources folder
+    public static final HashMap<String, String> SETTINGS = FileHelper.getSettings("config.txt");
+    public static final HashMap<String, String> LANGUAGE = FileHelper.getSettings("lang/" + SETTINGS.get("lang") + ".txt");
 
-    public static JFrame applicationWindow = new Window(APPLICATION_NAME);
+    public static AppGUI applicationWindow = new AppGUI(LANGUAGE);
 
     public static void main(String[] args) {
-        applicationWindow.setVisible(true);
+        applicationWindow.show();
     }
 
 }
