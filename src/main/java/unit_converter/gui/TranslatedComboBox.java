@@ -1,6 +1,7 @@
 package main.java.unit_converter.gui;
 
 import main.java.unit_converter.Application;
+import main.java.unit_converter.util.settings.LanguageManager;
 
 import javax.swing.*;
 
@@ -26,13 +27,13 @@ public class TranslatedComboBox extends JComboBox<String> {
         this.rawOptions = rawOptions;
         this.removeAllItems();
         for (String s : rawOptions) {
-            this.addItem(Application.LANGUAGE.getSetting(s, true));
+            this.addItem(LanguageManager.translate(s));
         }
     }
 
     public void reload(String[] rawOptions, String defaultItem) {
         reload(rawOptions);
-        this.setSelectedItem(Application.LANGUAGE.getSetting(defaultItem, true));
+        this.setSelectedItem(LanguageManager.translate(defaultItem));
     }
 
     public String getSelectedRaw() {

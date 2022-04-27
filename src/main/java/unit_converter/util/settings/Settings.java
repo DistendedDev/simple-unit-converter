@@ -23,14 +23,14 @@ public class Settings {
     }
 
     public String getSetting(String key) {
-        return getSetting(key, false);
+        return getSetting(key, "");
     }
 
-    public String getSetting(String key, boolean returnKey) {
+    public String getSetting(String key, String defaultReturn) {
         if (settings.containsKey(key)) {
             return settings.get(key);
         }
-        return (returnKey) ? key : null;
+        return defaultReturn;
     }
 
 }

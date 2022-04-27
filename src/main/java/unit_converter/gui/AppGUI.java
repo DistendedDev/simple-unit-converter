@@ -4,6 +4,7 @@ import main.java.unit_converter.Application;
 import main.java.unit_converter.conversion.UnitConversionUtil;
 import main.java.unit_converter.util.FileHelper;
 import main.java.unit_converter.util.WebHelper;
+import main.java.unit_converter.util.settings.LanguageManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -54,13 +55,13 @@ public class AppGUI {
         }});
     }};
 
-    private final JButton convertButton = new JButton(Application.LANGUAGE.getSetting("convert", true),
+    private final JButton convertButton = new JButton(LanguageManager.translate("convert"),
                     FileHelper.getImage("convert.png", 20, 20)) {{
         setHorizontalTextPosition(JButton.LEFT);
         setVerticalTextPosition(JButton.CENTER);
         setBorder(BorderFactory.createEtchedBorder());
         setIconTextGap(5);
-        setFont(new Font(Application.LANGUAGE.getSetting("FONT2"), Font.PLAIN, 16));
+        setFont(LanguageManager.getSpecialFont(Font.BOLD,16));
         addActionListener(e -> {
             try {
                 result = Double.parseDouble(numberEntryField.getText());
@@ -114,12 +115,12 @@ public class AppGUI {
 
 
     private final JLabel resultsLabel = new JLabel() {{
-        setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
+        setFont(LanguageManager.getNormalFont(Font.BOLD, 16));
     }};
 
     private final JPanel resultsPanel = new JPanel(new GridLayout(2, 1)) {{
-        add(new JLabel(Application.LANGUAGE.getSetting("result", true) + ":") {{
-            setFont(new Font(Application.LANGUAGE.getSetting("FONT1"), Font.BOLD, 16));
+        add(new JLabel(LanguageManager.translate("result") + ":") {{
+            setFont(LanguageManager.getNormalFont(Font.PLAIN, 16));
         }});
         add(resultsLabel);
         setBorder(BorderFactory.createEtchedBorder());
@@ -134,7 +135,7 @@ public class AppGUI {
 
     private final JFrame window = new JFrame() {{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(Application.LANGUAGE.getSetting("application_name", true) + " " + Application.VERSION);
+        setTitle(LanguageManager.translate("application_name") + " " + Application.VERSION);
         setLocationRelativeTo(null);
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         add(numberEntryPanel);
