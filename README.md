@@ -8,4 +8,4 @@ The main method is in the Application class.
 It creates an instance of JFrame, of the AppGUI class. 
 
 ### Status: not released yet
-Please feel free to clone and build it yourself
+Please feel free to clone / fork and build it yourself
