@@ -1,5 +1,7 @@
 package main.java.unit_converter.util.settings;
 
+import main.java.unit_converter.Application;
+import main.java.unit_converter.gui.TranslatableText;
 import main.java.unit_converter.util.FileHelper;
 
 import java.awt.*;
@@ -8,6 +10,10 @@ public class LanguageManager {
 
     public static void setLanguage(String lang) {
         Language = new Settings(FileHelper.getSettings("lang/" + lang));
+        TranslatableText.reloadAll();
+        try {
+            Application.applicationWindow.reloadAllSelectionBoxes();
+        } catch (Exception ignored) {}
     }
 
     public static String translate(String key) {

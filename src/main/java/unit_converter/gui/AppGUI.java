@@ -25,7 +25,12 @@ public class AppGUI {
         window.setVisible(true);
     }
 
-    private void reloadSelectionBoxes() {
+    public void reloadAllSelectionBoxes() {
+        unitTypeSelectionBox.reload();
+        reloadUnitSelectionBoxes();
+    }
+
+    public void reloadUnitSelectionBoxes() {
         unitSelectionBox1.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
                 UnitConversionUtil.getCommonUnit(unitTypeSelectionBox.getSelectedRaw()));
         unitSelectionBox2.reload(UnitConversionUtil.getUnits(unitTypeSelectionBox.getSelectedRaw()),
@@ -35,33 +40,40 @@ public class AppGUI {
     private double result;
 
     private final JMenuBar menuBar = new JMenuBar() {{
-        add(new JMenu("Settings") {{
-            add(new JMenuItem("open settings folder") {{
+        add(new JMenu() {{
+            new TranslatableText("settings").makeTextOf(this);
+            add(new JMenuItem() {{
+                new TranslatableText("settings_folder").makeTextOf(this);
                 addActionListener(e -> FileHelper.openResourceDirectory("settings"));
             }});
         }});
-        add(new JMenu("Help") {{
-            add(new JMenuItem("report issue") {{
+        add(new JMenu() {{
+            new TranslatableText("help").makeTextOf(this);
+            add(new JMenuItem() {{
+                new TranslatableText("issue").makeTextOf(this);
                 addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter/issues"));
             }});
-            add(new JMenuItem("github page") {{
+            add(new JMenuItem() {{
+                new TranslatableText("github").makeTextOf(this);
                 addActionListener(e -> WebHelper.openWebpage("https://github.com/DistendedDev/simple-unit-converter"));
             }});
         }});
-        add(new JMenu("Quit") {{
-            add(new JMenuItem("Exit") {{
+        add(new JMenu() {{
+            new TranslatableText("quit").makeTextOf(this);
+            add(new JMenuItem() {{
+                new TranslatableText("exit").makeTextOf(this);
                 addActionListener(e -> System.exit(0));
             }});
         }});
     }};
 
-    private final JButton convertButton = new JButton(LanguageManager.translate("convert"),
-                    FileHelper.getImage("convert.png", 20, 20)) {{
+    private final JButton convertButton = new JButton(FileHelper.getImage("convert.png", 20, 20)) {{
+        new TranslatableText("convert").makeTextOf(this);
         setHorizontalTextPosition(JButton.LEFT);
         setVerticalTextPosition(JButton.CENTER);
         setBorder(BorderFactory.createEtchedBorder());
         setIconTextGap(5);
-        setFont(LanguageManager.getSpecialFont(Font.BOLD,16));
+        setFont(LanguageManager.getSpecialFont(Font.PLAIN,16));
         addActionListener(e -> {
             try {
                 result = Double.parseDouble(numberEntryField.getText());
@@ -83,7 +95,9 @@ public class AppGUI {
     private final JTextField numberEntryField = new JTextField();
 
     private final TranslatedComboBox unitTypeSelectionBox = new TranslatedComboBox(UnitConversionUtil.getUnitTypes()) {{
-        addActionListener(e -> reloadSelectionBoxes());
+        addActionListener(e -> {
+            if (this.getSelectedItem() != null) reloadUnitSelectionBoxes();
+        });
     }};
 
     private final TranslatedComboBox unitSelectionBox1 = new TranslatedComboBox() {{
@@ -119,23 +133,29 @@ public class AppGUI {
     }};
 
     private final JPanel resultsPanel = new JPanel(new GridLayout(2, 1)) {{
-        add(new JLabel(LanguageManager.translate("result") + ":") {{
-            setFont(LanguageManager.getNormalFont(Font.PLAIN, 16));
+        add(new JLabel() {{
+            new TranslatableText("result", ":").makeTextOf(this);
+            setFont(LanguageManager.getNormalFont(Font.BOLD, 16));
         }});
         add(resultsLabel);
         setBorder(BorderFactory.createEtchedBorder());
     }};
 
     private final JPanel footerPanel = new JPanel() {{
-        add(new JButton("use result") {{
+        add(new JButton() {{
+            new TranslatableText("use_result").makeTextOf(this);
             addActionListener(e -> numberEntryField.setText(result + ""));
             setFocusable(false);
+        }});
+        add(new JButton("lang") {{
+            addActionListener(e -> LanguageManager.setLanguage("chi"));
         }});
     }};
 
     private final JFrame window = new JFrame() {{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setTitle(LanguageManager.translate("application_name") + " " + Application.VERSION);
+        new TranslatableText("application_name", " " + Application.VERSION).makeTextOf(this);
+        //setTitle(LanguageManager.translate("application_name") + " " + Application.VERSION);
         setLocationRelativeTo(null);
         setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
         add(numberEntryPanel);

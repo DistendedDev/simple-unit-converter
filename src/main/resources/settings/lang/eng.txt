@@ -6,6 +6,16 @@ FONT2:Cooper Black
 application_name:Unit Converter
 convert:Convert
 result:Result
+use_result:Use result
+
+# Menu
+settings:Settings
+settings_folder:Open settings folder
+help:Help
+issue:Report issue
+github:GitHub page
+quit:Quit
+exit:Exit
 
 # Unit Types
 Length:Length

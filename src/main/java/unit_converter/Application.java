@@ -9,10 +9,11 @@ public class Application {
 
     public static final String VERSION = "0.1.1";
     public static final Settings SETTINGS = new Settings(FileHelper.getSettings("config"));
+    public static AppGUI applicationWindow;
 
     public static void main(String[] args) {
         LanguageManager.setLanguage(SETTINGS.getSetting("lang"));
-        AppGUI applicationWindow = new AppGUI(600, 250);
+        applicationWindow = new AppGUI(600, 250);
         applicationWindow.show();
     }
 

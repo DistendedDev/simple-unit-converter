@@ -4,10 +4,13 @@ import main.java.unit_converter.Application;
 import main.java.unit_converter.util.settings.LanguageManager;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TranslatedComboBox extends JComboBox<String> {
 
     private String[] rawOptions;
+    private static List<TranslatedComboBox> allCreatedBoxes = new ArrayList<>();
 
     public TranslatedComboBox(String[] rawOptions) {
         this();
@@ -21,19 +24,24 @@ public class TranslatedComboBox extends JComboBox<String> {
 
     public TranslatedComboBox() {
         super();
+        allCreatedBoxes.add(this);
     }
 
     public void reload(String[] rawOptions) {
         this.rawOptions = rawOptions;
-        this.removeAllItems();
-        for (String s : rawOptions) {
-            this.addItem(LanguageManager.translate(s));
-        }
+        reload();
     }
 
     public void reload(String[] rawOptions, String defaultItem) {
         reload(rawOptions);
         this.setSelectedItem(LanguageManager.translate(defaultItem));
+    }
+
+    public void reload() {
+        this.removeAllItems();
+        for (String s : rawOptions) {
+            this.addItem(LanguageManager.translate(s));
+        }
     }
 
     public String getSelectedRaw() {
