@@ -1,4 +1,4 @@
-# Simple Unit Converter (work-in-progress)
+# Simple Unit Converter (abandoned)
 A simple Unit Converter, made with Java.
 
 ### How it works
